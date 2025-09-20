@@ -1,0 +1,3 @@
+carpet.rule.enableWhhTestCommand.name: "enableWhhTestCommand"
+carpet.rule.enableWhhTestCommand.desc: "Enable /whhtest command which replies with 'Hello whh'"
+carpet.rule.category.WHH: "WHH"

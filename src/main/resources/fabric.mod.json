@@ -1,0 +1,45 @@
+{
+	"schemaVersion": 1,
+	"id": "carpetwhhaddition",
+	"version": "${version}",
+	"name": "CarpetWhhAddition",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/carpetwhhaddition/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.whh.CarpetWhhAddition"
+		],
+		"client": [
+			"com.whh.CarpetWhhAdditionClient"
+		],
+		"fabric-datagen": [
+			"com.whh.CarpetWhhAdditionDataGenerator"
+		]
+	},
+	"mixins": [
+		"carpetwhhaddition.mixins.json",
+		{
+			"config": "carpetwhhaddition.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.17.2",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*",
+        "carpet": ">=1.4.147+v240613"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
