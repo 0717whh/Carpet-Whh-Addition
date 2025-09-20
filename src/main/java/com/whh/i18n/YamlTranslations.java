@@ -38,18 +38,18 @@ public final class YamlTranslations {
         return Collections.emptyMap();
     }
 
-    private static void flatten(String prefix, Map<String, Object> src, Map<String, String> out) {
-        for (Map.Entry<String, Object> e : src.entrySet()) {
-            String key = prefix.isEmpty() ? e.getKey() : prefix + "." + e.getKey();
+    private static void flatten(String prefix, Map<?, ?> src, Map<String, String> out) {
+        for (Map.Entry<?, ?> e : src.entrySet()) {
+            String key = prefix.isEmpty() ? e.getKey().toString() : prefix + "." + e.getKey();
             Object v = e.getValue();
-            if (v instanceof Map<?, ?> m) {
-                // 兼容嵌套：rule.enableWhhTestCommand.name: xxx
-                flatten(key, (Map<String, Object>) m, out);
+            if (v instanceof Map<?, ?> nested) {
+                flatten(key, nested, out);
             } else if (v != null) {
-                out.put(key, String.valueOf(v));
+                out.put(key, v.toString());
             }
         }
     }
+
 
 
 }

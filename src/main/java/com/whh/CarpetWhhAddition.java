@@ -5,7 +5,6 @@ import carpet.CarpetServer;
 import com.mojang.brigadier.CommandDispatcher;
 import com.whh.i18n.YamlTranslations;
 import com.whh.init.CommandRegistries;
-import com.whh.settings.CarpetWhhSettings;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.server.command.ServerCommandSource;
@@ -44,7 +43,8 @@ public class CarpetWhhAddition implements ModInitializer, CarpetExtension {
 
     public void onGameStarted() {
         //Carpet解析规则类
-        CarpetServer.settingsManager.parseSettingsClass(CarpetWhhSettings.class);
+        //CarpetServer.settingsManager.parseSettingsClass(CarpetWhhSettings.class);
+        com.whh.init.RuleRegistries.registerAll();
     }
 
 
