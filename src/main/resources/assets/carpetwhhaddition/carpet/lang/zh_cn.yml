@@ -1,3 +1,5 @@
-carpet.rule.enableWhhTestCommand.name: "enableWhhTestCommand"
+carpet.rule.enableWhhTestCommand.name: "启用测试命令"
 carpet.rule.enableWhhTestCommand.desc: "启用 /whhtest 命令，返回 “Hello whh”"
 carpet.rule.category.WHH: "WHH"
+carpet.rule.autoNightVision.name: "自动夜视"
+carpet.rule.autoNightVision.desc: "为所有玩家提供自动夜视效果，无需使用药水或物品。"

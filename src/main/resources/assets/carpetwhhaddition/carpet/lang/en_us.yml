@@ -1,3 +1,5 @@
 carpet.rule.enableWhhTestCommand.name: "enableWhhTestCommand"
 carpet.rule.enableWhhTestCommand.desc: "Enable /whhtest command which replies with 'Hello whh'"
 carpet.rule.category.WHH: "WHH"
+carpet.rule.autoNightVision.name: "Auto Night Vision"
+carpet.rule.autoNightVision.desc: "Grants players automatic night vision, no need for potions or items."
