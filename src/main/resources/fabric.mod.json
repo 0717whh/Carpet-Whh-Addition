@@ -16,7 +16,7 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.whh.CarpetWhhAddition"
+          "com.whh.CarpetWhhAddition"
 		],
 		"client": [
 			"com.whh.CarpetWhhAdditionClient"

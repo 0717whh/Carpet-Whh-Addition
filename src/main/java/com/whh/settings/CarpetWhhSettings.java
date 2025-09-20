@@ -1,4 +1,4 @@
-package com.whh;
+package com.whh.settings;
 
 import carpet.api.settings.Rule;
 import carpet.api.settings.RuleCategory;

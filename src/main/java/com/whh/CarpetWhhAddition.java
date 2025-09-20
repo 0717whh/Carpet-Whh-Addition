@@ -3,18 +3,16 @@ package com.whh;
 import carpet.CarpetExtension;
 import carpet.CarpetServer;
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.context.CommandContext;
+import com.whh.i18n.YamlTranslations;
+import com.whh.init.CommandRegistries;
+import com.whh.settings.CarpetWhhSettings;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.command.CommandRegistryAccess;
-import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.text.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
 
-import java.io.InputStream;
-import java.util.Collections;
 import java.util.Map;
 
 
@@ -33,7 +31,9 @@ public class CarpetWhhAddition implements ModInitializer, CarpetExtension {
 		// Proceed with mild caution.
        // CarpetServer.settingsManager.parseSettingsClass(CarpetWhhSettings.class);
 		LOGGER.info("Hello Fabric world!");
+
         CarpetServer.manageExtension(this);
+
         LOGGER.info("[{}] initialized", MOD_ID);
 
 
@@ -50,53 +50,12 @@ public class CarpetWhhAddition implements ModInitializer, CarpetExtension {
 
     public void registerCommands(CommandDispatcher<ServerCommandSource> dispatcher,
                                  CommandRegistryAccess registryAccess) {
-        dispatcher.register(
-                CommandManager.literal("whhtest")
-                        .executes(this::runWhhTest)
-        );
+        CommandRegistries.registerAll(dispatcher, registryAccess);
     }
 
 
-
-    private int runWhhTest(CommandContext<ServerCommandSource> ctx) {
-        if (!CarpetWhhSettings.enableWhhTestCommand) {
-            ctx.getSource().sendError(Text.literal(
-                    "Command disabled by Carpet rule: enableWhhTestCommand"));
-            return 0;
-        }
-        ctx.getSource().sendFeedback(() -> Text.literal("Hello whh"), false);
-        return 1;
-    }
-    @Override
     public Map<String, String> canHasTranslations(String lang) {
-        String path = String.format("/assets/%s/carpet/lang/%s.yml", MOD_ID, lang);
-        try (InputStream in = CarpetWhhAddition.class.getResourceAsStream(path)) {
-            if (in == null) return Collections.emptyMap();
-            Map<String, Object> raw = YAML.load(in);
-            return flattenYaml(raw);
-        } catch (Exception e) {
-            return Collections.emptyMap();
-        }
+        return YamlTranslations.load(lang, MOD_ID);
     }
-
-    private static Map<String, String> flattenYaml(Map<String, Object> raw) {
-        java.util.Map<String, String> flat = new java.util.HashMap<>();
-        flatten("", raw, flat);
-        return flat;
-    }
-
-    @SuppressWarnings("unchecked")
-    private static void flatten(String prefix, Map<String, Object> src, Map<String, String> out) {
-        for (Map.Entry<String, Object> e : src.entrySet()) {
-            String key = prefix.isEmpty() ? e.getKey() : prefix + "." + e.getKey();
-            Object v = e.getValue();
-            if (v instanceof Map<?, ?> m) {
-                flatten(key, (Map<String, Object>) m, out);
-            } else if (v != null) {
-                out.put(key, String.valueOf(v));
-            }
-        }
-    }
-
 
 }
