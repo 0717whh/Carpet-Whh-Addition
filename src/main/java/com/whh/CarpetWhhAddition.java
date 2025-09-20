@@ -4,10 +4,12 @@ import carpet.CarpetExtension;
 import carpet.CarpetServer;
 import com.mojang.brigadier.CommandDispatcher;
 import com.whh.i18n.YamlTranslations;
-import com.whh.init.CommandRegistries;
+import com.whh.util.DayTimeListener;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.server.world.ServerWorld;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
@@ -35,18 +37,19 @@ public class CarpetWhhAddition implements ModInitializer, CarpetExtension {
 
         LOGGER.info("[{}] initialized", MOD_ID);
 
+        ServerTickEvents.START_WORLD_TICK.register(world -> {
+            if (world instanceof ServerWorld) {
+                DayTimeListener.tick(world);  // 检查时间并在早上应用夜视效果
+            }
+        });
 
     }
     public String version() {
         return "WhhCarpetAddition 0.1.0";
     }
-
-    public void onGameStarted() {
-        //Carpet解析规则类
-        //CarpetServer.settingsManager.parseSettingsClass(CarpetWhhSettings.class);
-        com.whh.init.RuleRegistries.registerAll();
+    public void  onGameStarted() {
+        CarpetRuleRegistrar.register();
     }
-
 
     public void registerCommands(CommandDispatcher<ServerCommandSource> dispatcher,
                                  CommandRegistryAccess registryAccess) {
@@ -54,8 +57,14 @@ public class CarpetWhhAddition implements ModInitializer, CarpetExtension {
     }
 
 
+
+
+
     public Map<String, String> canHasTranslations(String lang) {
         return YamlTranslations.load(lang, MOD_ID);
     }
-
+    public static void changeAutoNightVisionRule(boolean newValue) {
+        CarpetWhhSettings.autoNightVision = newValue;  // 更新规则值
+        CarpetWhhSettings.onAutoNightVisionChanged();  // 触发规则变化后的操作
+    }
 }

@@ -2,7 +2,7 @@ package com.whh.command;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
-import com.whh.settings.CarpetWhhSettings;
+import com.whh.CarpetWhhSettings;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
